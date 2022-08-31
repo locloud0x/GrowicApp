@@ -1,0 +1,53 @@
+pragma solidity >=0.8.0 <0.9.0;
+
+//SPDX-License-Identifier: MIT
+
+contract Register {
+    address public owner;
+    address public studentID;
+   // mapping(address=>struct) public addresToStudent; //
+    mapping(address=>uint256) public addressToIndex;
+    
+    struct Student {
+        uint256 studentID;
+        uint256 percentage;
+        string TotalMarks;
+    }
+    Students[] public allStudents;
+
+    constructor() {
+        require(msg.sender == owner, "You are not the owner!");
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function idCheck(address _studentID) public view returns (bool) {
+        return allStudents[addressToIndex[_studentID]] ? true : false;
+    }
+
+    function register(
+        address _studentID,
+        uint256 _percentage,
+        string _marks
+    ) public onlyOwner {
+        require (idCheck(_studentID) = false, "Student is already registered");
+            Student memory newStudent = Struct({
+                studentID: _studentID,
+                percentage: _percentage,
+                totalMarks: _marks
+            });
+            
+            allStudents.push(newStudent);
+            
+            uint256 memory index;
+            index = allStudents.length - 1;
+            addressToIndex[_studentID] = index;
+      }
+
+    function getStudentDetails(address memory _studentID) public view return(struct){
+      return allStudents[addressToIndex[_studentID]];
+    }
+}
