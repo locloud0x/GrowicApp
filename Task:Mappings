@@ -1,0 +1,16 @@
+pragma solidity >=0.8.0 <0.9.0;
+
+//SPDX-License-Identifier: MIT
+
+contract MappingsTask {
+  mappings(address => uint) public balance;	
+
+  function deposit(address _addr, uint256 _amount) payable public {
+	balance[_addr] = _amount;
+  }
+
+  function checkBalance(address _addr) public view returns (uint256){
+	return balance[_addr];
+  }
+
+}
