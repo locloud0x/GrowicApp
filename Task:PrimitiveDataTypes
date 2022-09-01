@@ -5,15 +5,14 @@ pragma solidity >=0.8.0 <0.9.0;
 contract Register {
     address public owner;
     address public studentID;
-   // mapping(address=>struct) public addresToStudent; //
     mapping(address=>uint256) public addressToIndex;
     
     struct Student {
         uint256 studentID;
         uint256 percentage;
-        string TotalMarks;
+        string totalMarks;
     }
-    Students[] public allStudents;
+    Student[] public allStudents;
 
     constructor() {
         require(msg.sender == owner, "You are not the owner!");
@@ -25,29 +24,26 @@ contract Register {
     }
 
     function idCheck(address _studentID) public view returns (bool) {
-        return allStudents[addressToIndex[_studentID]] ? true : false;
+        uint256 index = addressToIndex[_studentID];
+        return allStudents[index] ? true : false;
     }
 
     function register(
         address _studentID,
         uint256 _percentage,
-        string _marks
+        string calldata _marks
     ) public onlyOwner {
         require (idCheck(_studentID) = false, "Student is already registered");
-            Student memory newStudent = Struct({
-                studentID: _studentID,
-                percentage: _percentage,
-                totalMarks: _marks
-            });
+        allStudents.push(studentID: _studentID, percentage: _percentage, totalMarks: _marks);
             
-            allStudents.push(newStudent);
-            
-            uint256 memory index;
-            index = allStudents.length - 1;
-            addressToIndex[_studentID] = index;
+        addressToIndex[_studentID] = allStudents.length - 1;
       }
 
-    function getStudentDetails(address memory _studentID) public view return(struct){
-      return allStudents[addressToIndex[_studentID]];
+    function getStudentDetails(address memory _studentID) public view return(address studentID, uint256 percentage, string memory totalMarks){
+      uint256 memory index;
+      index = addressToIndex[_studentID];
+      Student storage student = allStudents[index];
+      
+      return(student.studentId, student.percentage, student.totalMarks);
     }
 }
