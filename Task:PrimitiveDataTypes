@@ -23,7 +23,7 @@ contract Register {
         _;
     }
 
-    function idCheck(address _studentID) public view returns (bool) {
+    function idCheck(address _studentID) public view returns(bool) {
         uint256 index = addressToIndex[_studentID];
         return allStudents[index] ? true : false;
     }
@@ -39,7 +39,7 @@ contract Register {
         addressToIndex[_studentID] = allStudents.length - 1;
       }
 
-    function getStudentDetails(address memory _studentID) public view return(address studentID, uint256 percentage, string memory totalMarks){
+    function getStudentDetails(address memory _studentID) public view returns(address studentID, uint256 percentage, string memory totalMarks){
       uint256 memory index;
       index = addressToIndex[_studentID];
       Student storage student = allStudents[index];
